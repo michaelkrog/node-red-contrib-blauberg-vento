@@ -1,0 +1,56 @@
+{
+  "name": "@michaelkrog/node-red-contrib-blauberg-vento",
+  "version": "1.0.0",
+  "description": "This is a Javascript module with Typescript support for communicating with a Blauberg Vento (as OEMS like Duka One S6w). The Blauberg Vento is a one room ventilationsystem with a heat exchanger.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "/dist"
+  ],
+  "node-red": {
+    "nodes": {
+      "blauberg-vento": "dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+
+  "scripts": {
+    "build": "rm -rf dist && rollup -c && cp src/index.html dist",
+    "integration": "jest -c jest.config.integration.js",
+    "test": "jest --collect-coverage"
+  },
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelkrog/node-red-contrib-blauberg-vento.git"
+  },
+  "keywords": [
+    "blauberg",
+    "duka"
+  ],
+  "author": "Apaq",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelkrog/node-red-contrib-blauberg-vento/issues"
+  },
+  "homepage": "https://github.com/michaelkrog/node-red-contrib-blauberg-vento#readme",
+  "dependencies": {
+    "blaubergventojs": "^1.0.0-alpha.1",
+    "typescript": "^4.2.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "@types/node": "^18.7.6",
+    "@types/node-red": "^0.17.3",
+    "esbuild": "^0.14.15",
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3",
+    "rollup": "^2.52.7",
+    "rollup-plugin-dts": "^3.0.2",
+    "rollup-plugin-esbuild": "^4.5.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-jest": "^27.1.3"
+  }
+}

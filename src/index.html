@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    RED.nodes.registerType('blauberg-vento',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            id: {value:''}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "fan.png",
+        label: function() {
+            return this.name||"blauberg vento";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="blauberg-vento">
+    <div class="form-row">
+        <label for="node-input-id"><i class="fa fa-tag"></i> Id</label>
+        <input type="text" id="node-input-id" placeholder="Id">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="blauberg-vento">
+    <p>A node that communicates with Blauberg Vento ventilators (and derivatives)</p>
