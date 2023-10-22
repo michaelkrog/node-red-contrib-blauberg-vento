@@ -12,10 +12,10 @@ module.exports = function (RED: Red) {
         this.on('input', (msg) => {
             this.id = config.id;
             if(this.id != null) {    
-                this.debug("Receieved message for device id " + this.id);
+                this.info("Receieved message for device id " + this.id);
                 blauBergResource.findById(this.id).then(device => {
                     if(device == null) {
-                        this.debug("Device not found");
+                        this.info("Device not found");
                         return;
                     }
                 
@@ -25,11 +25,25 @@ module.exports = function (RED: Red) {
                     device.manualSpeed = receivedDevice.manualSpeed ?? device.manualSpeed;
                     device.on = receivedDevice.on ?? device.on;
                     
-                    this.debug("Sending message to device: " + device);
+                    this.info("Sending message to device: " + device);
                     blauBergResource.save(device);
                 });
                 
             }
+        });
+
+        this.on('editprepare', async _ => {
+            this.info("Listing devices.");
+            var devices = (await blauBergResource.findAll()).content;
+            var el = document.getElementById('node-input-id') as any;
+            el.typedInput({
+                types: [
+                    {
+                        value: "id",
+                        options: devices.map(d => {return {value: d.id, label: d.id};})
+                    }
+                ]
+            })
         });
     }
 
