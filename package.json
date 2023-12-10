@@ -8,6 +8,7 @@
     "/dist"
   ],
   "node-red": {
+    "version": ">=2.0.0",
     "nodes": {
       "blauberg-vento": "dist/index.js"
     }
