@@ -12,10 +12,10 @@ module.exports = function (RED: Red) {
         this.on('input', (msg) => {
             this.id = msg.id || config.id;
             if(this.id != null) {
-                this.info("Receieved message for device id " + this.id);
+                this.log("Receieved message for device id " + this.id);
                 blauBergResource.findById(this.id).then(device => {
                     if(device == null) {
-                        this.info("Device not found");
+                        this.log("Device not found");
                         return;
                     }
 
@@ -25,7 +25,7 @@ module.exports = function (RED: Red) {
                     device.manualSpeed = receivedDevice.manualSpeed ?? device.manualSpeed;
                     device.on = receivedDevice.on ?? device.on;
 
-                    this.info("Sending message to device: " + device);
+                    this.log("Sending message to device: " + device);
                     blauBergResource.save(device);
                 });
 
@@ -33,7 +33,7 @@ module.exports = function (RED: Red) {
         });
 
         this.on('editprepare', async _ => {
-            this.info("Listing devices.");
+            this.log("Listing devices.");
             var devices = (await blauBergResource.findAll()).content;
             var el = document.getElementById('node-input-id') as any;
             el.typedInput({
