@@ -18,6 +18,13 @@ module.exports = function (RED: Red) {
                         this.log("Device not found");
                         return;
                     }
+                    if (!msg.payload) {
+                        this.send({
+                            id: this.id,
+                            payload: device,
+                        });
+                        return;
+                    }
 
                     var receivedDevice = msg.payload as Device;
                     device.speed = receivedDevice.speed ?? device.speed;
@@ -26,7 +33,19 @@ module.exports = function (RED: Red) {
                     device.on = receivedDevice.on ?? device.on;
 
                     this.log("Sending message to device: " + device);
-                    blauBergResource.save(device);
+                    blauBergResource.save(device)
+                        .then((updatedDevice) => {
+                            this.send({
+                                id: this.id,
+                                payload: {
+                                    ...device,
+                                    ...updatedDevice
+                                },
+                            });
+                        })
+                        .catch((error) => {
+                            this.error(`Error sending message to device ${device}: ${error}`);
+                        });
                 });
 
             }
